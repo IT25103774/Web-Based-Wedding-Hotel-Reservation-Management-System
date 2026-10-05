@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finance Officer Dashboard | CeremonyConnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --bg-portal: #070d18;
+      --card-portal: #0d172e;
+      --card-border: #1a2a4f;
+      --accent-blue: #2563eb;
+      --accent-blue-hover: #1d4ed8;
+      --accent-cyan: #38bdf8;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --text-muted-blue: #94a3b8;
+    }
+
+    body {
+      background-color: var(--bg-portal);
+      color: #f1f5f9;
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ── Top Header matching screenshot ── */
+    .portal-nav {
+      background: #091224;
+      border-bottom: 1px solid #142445;
+      padding: 16px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .portal-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+    .portal-badge {
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.15rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.5px;
+    }
+    .portal-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .portal-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+    .portal-sub {
+      font-size: 0.68rem;
+      color: var(--accent-cyan);
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .portal-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .role-toggle-btn {
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .role-customer {
+      background: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .role-finance-active {
+      background: #2563eb;
+      color: #ffffff;
+      border: 1px solid #3b82f6;
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+    }
+    .user-pill {
+      background: #111e3b;
+      border: 1px solid #1e3366;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .user-pill .role-tag {
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Content Layout ── */
+    .portal-content {
+      max-width: 1280px;
+      margin: 36px auto 80px;
+      padding: 0 24px;
+    }
+
+    .section-header-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #60a5fa;
+      margin: 0;
+    }
+    .queue-badge {
+      background: rgba(37, 99, 235, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .portal-table-wrap {
+      background: var(--card-portal);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow-x: auto;
+      margin-bottom: 44px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .portal-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    .portal-table th {
+      background: #091224;
+      color: var(--text-muted-blue);
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .portal-table td {
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: middle;
+      color: #e2e8f0;
+    }
+    .portal-table tr:hover {
+      background: rgba(37, 99, 235, 0.05);
+    }
+
+    .pill-type {
+      display: inline-block;
+      background: #1e3a8a;
+      color: #93c5fd;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .status-pill {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .status-verified {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .status-rejected {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .status-pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .status-refunded {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .btn-verify {
+      background: #10b981;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-verify:hover { background: #059669; }
+
+    .btn-reject {
+      background: #ef4444;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-reject:hover { background: #dc2626; }
+
+    .btn-invoice {
+      background: #1e3a8a;
+      color: #93c5fd;
+      border: 1px solid #3b82f6;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-invoice:hover { background: #2563eb; color: #fff; }
+
+    .btn-complete-refund {
+      background: linear-gradient(135deg, #a855f7, #9333ea);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-complete-refund:hover { opacity: 0.9; }
+
+    .btn-link-action {
+      background: transparent;
+      color: #94a3b8;
+      border: none;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 4px;
+    }
+    .btn-link-action:hover { color: #ffffff; }
+
+    /* ── Modals ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-overlay.hidden { display: none !important; }
+
+    .modal-box {
+      background: #0f1c35;
+      border: 1px solid #1e3366;
+      border-radius: 16px;
+      max-width: 540px;
+      width: 100%;
+      padding: 32px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+      position: relative;
+    }
+    .modal-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 16px;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+    .modal-close-btn:hover { color: #ffffff; }
+
+    .modal-field {
+      margin-bottom: 18px;
+    }
+    .modal-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+    .modal-input, .modal-textarea {
+      width: 100%;
+      background: #091224;
+      border: 1px solid #1e3366;
+      border-radius: 8px;
+      padding: 11px 14px;
+      color: #ffffff;
+      font-size: 0.9rem;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .modal-input:focus, .modal-textarea:focus {
+      border-color: #3b82f6;
+    }
+
+    /* Receipt Print Preview */
+    .receipt-container {
+      background: #ffffff;
+      color: #1e293b;
+      padding: 36px;
+      border-radius: 12px;
+      font-family: var(--font-sans);
+    }
+    .receipt-header {
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ╔═══════════════════════════════════════════════════════════════╗ -->
+  <!-- ║         TOP NAVIGATION (MATCHING SCREENSHOT)                  ║ -->
+  <!-- ╚═══════════════════════════════════════════════════════════════╝ -->
+  <header class="portal-nav">
+    <a href="dashboard.html" class="portal-brand">
+      <div class="portal-badge">CC</div>
+      <div class="portal-brand-text">
+        <span class="portal-title">CeremonyConnect</span>
+        <span class="portal-sub">PAYMENT &amp; INVOICING</span>
+      </div>
+    </a>
+
+    <div class="portal-actions">
+      <a href="customer-payment.html" class="role-toggle-btn role-customer">
+        👤 Customer View
+      </a>
+      <a href="finance.html" class="role-toggle-btn role-finance-active">
+        💼 Finance Officer
+      </a>
+      <div class="user-pill">
+        <span id="navOfficerName">Ferdinandez M.G.I.D.</span>
+        <span class="role-tag">FINANCE OFFICER</span>
+      </div>
+      <a href="dashboard.html" style="color:var(--text-muted-blue);font-size:0.8rem;text-decoration:none;margin-left:8px;">
+        ⚙️ Workspace
+      </a>
+      <button onclick="financeSignOut()" class="role-toggle-btn" style="background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3);cursor:pointer;margin-left:6px;">
+        🚪 Sign Out
+      </button>
+    </div>
+  </header>
+
+  <!-- ╔═══════════════════════════════════════════════════════════════╗ -->
+  <!-- ║         MAIN DASHBOARD                                        ║ -->
+  <!-- ╚═══════════════════════════════════════════════════════════════╝ -->
+  <main class="portal-content">
+
+    <!-- ── Section 1: Verification Queue ──────────────────────────── -->
+    <section>
+      <div class="section-header-wrap">
+        <h2 class="section-title">Verification Queue</h2>
+        <span class="queue-badge" id="queueBadge">0 ACTION REQUIRED</span>
+      </div>
+
+      <div class="portal-table-wrap">
+        <table class="portal-table">
+          <thead>
+            <tr>
+              <th>PAYMENT REF</th>
+              <th>CUSTOMER</th>
+              <th>BOOKING REF</th>
+              <th>AMOUNT</th>
+              <th>BANK &amp; TRANSACTION NO</th>
+              <th>SUBMITTED DATE</th>
+              <th>SLIP INSPECTION</th>
+              <th>VERIFICATION DECISION</th>
+            </tr>
+          </thead>
+          <tbody id="queueTableBody">
+            <tr>
+              <td colspan="8" style="text-align:center;padding:36px;color:#94a3b8;">
+                No pending payment slips to verify. All caught up!
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── Section 2: All Financial Transactions ──────────────────── -->
+    <section>
+      <div class="section-header-wrap">
+        <h2 class="section-title">All Financial Transactions</h2>
+      </div>
+
+      <div class="portal-table-wrap">
+        <table class="portal-table">
+          <thead>
+            <tr>
+              <th>PAYMENT REF</th>
+              <th>CUSTOMER</th>
+              <th>BOOKING REF</th>
+              <th>AMOUNT</th>
+              <th>TYPE</th>
+              <th>DATE</th>
+              <th>STATUS</th>
+              <th>INVOICE</th>
+            </tr>
+          </thead>
+          <tbody id="transactionsTableBody">
+            <tr>
+              <td colspan="8" style="text-align:center;padding:36px;color:#94a3b8;">
+                Loading transactions…
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── Section 3: Refund Processing Queue (Part 3.5) ──────────── -->
+    <section>
+      <div class="section-header-wrap">
+        <h2 class="section-title">Refund Processing Queue</h2>
+        <span class="queue-badge" style="border-color:rgba(168,85,247,0.4);color:#c084fc;" id="refundQueueBadge">0 IN PROCESSING</span>
+      </div>
+
+      <div class="portal-table-wrap">
+        <table class="portal-table">
+          <thead>
+            <tr>
+              <th>REFUND REF</th>
+              <th>PAYMENT REF</th>
+              <th>BOOKING REF</th>
+              <th>CUSTOMER</th>
+              <th>AMOUNT</th>
+              <th>CANCELLATION REASON</th>
+              <th>REQUESTED DATE</th>
+              <th>STATUS</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody id="refundsTableBody">
+            <tr>
+              <td colspan="9" style="text-align:center;padding:36px;color:#94a3b8;">
+                No pending refunds currently in processing.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ╔═══════════════════════════════════════════════════════════════╗ -->
+  <!-- ║         MODALS                                                ║ -->
+  <!-- ╚═══════════════════════════════════════════════════════════════╝ -->
+
+  <!-- Reject Reason Modal -->
+  <div class="modal-overlay hidden" id="rejectReasonModal">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeModal('rejectReasonModal')">✕</button>
+      <h3 class="modal-title">Reject Payment Slip</h3>
+      <input type="hidden" id="rejectPaymentId" />
+
+      <form onsubmit="handleConfirmReject(event)">
+        <div class="modal-field">
+          <label for="rejectReasonText">Reason for Rejection *</label>
+          <textarea id="rejectReasonText" class="modal-textarea" rows="4" placeholder="e.g. Deposit slip illegible. Please re-upload clear photo." required></textarea>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;gap:12px;">
+          <button type="button" class="btn-verify" style="background:#334155;" onclick="closeModal('rejectReasonModal')">Cancel</button>
+          <button type="submit" class="btn-reject">Confirm Rejection</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Slip Modal -->
+  <div class="modal-overlay hidden" id="viewSlipModal">
+    <div class="modal-box" style="max-width:700px;text-align:center;">
+      <button class="modal-close-btn" onclick="closeModal('viewSlipModal')">✕</button>
+      <h3 class="modal-title" style="margin-bottom:20px;">Bank Transfer Slip Inspection</h3>
+      <div id="slipViewerContent" style="min-height:300px;display:flex;align-items:center;justify-content:center;background:#091224;border-radius:10px;overflow:hidden;">
+        <img id="slipImgPreview" src="" alt="Slip Preview" style="max-width:100%;max-height:550px;object-fit:contain;" />
+      </div>
+      <div style="margin-top:18px;">
+        <a id="slipDownloadLink" href="#" target="_blank" class="btn-verify" style="font-size:0.8rem;text-decoration:none;">
+          ⬇️ Open Original Slip
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tax Invoice Modal -->
+  <div class="modal-overlay hidden" id="invoiceModal">
+    <div class="modal-box" style="max-width:620px;">
+      <button class="modal-close-btn" onclick="closeModal('invoiceModal')">✕</button>
+
+      <div class="receipt-container" id="printableInvoice">
+        <div class="receipt-header">
+          <div>
+            <div style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:#0f172a;">CEREMONYCONNECT</div>
+            <div style="font-size:0.75rem;color:#64748b;">COMMERCIAL TAX INVOICE</div>
+          </div>
+          <div style="text-align:right;">
+            <div id="invNumber" style="font-weight:700;font-size:0.95rem;color:#2563eb;">INV-2026-002</div>
+            <div id="invDate" style="font-size:0.75rem;color:#64748b;">2026-09-25</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:20px;font-size:0.85rem;line-height:1.6;">
+          <strong>Customer:</strong> <span id="invCustomer">Kasun Perera</span><br />
+          <strong>Booking Reference:</strong> <span id="invBookingRef">CC-BK-2026-002</span><br />
+          <strong>Verified Reference:</strong> <span id="invPaymentRef">CC-PAY-2026-005</span><br />
+          <strong>Issuer:</strong> CeremonyConnect Finance Division
+        </div>
+
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;margin-bottom:20px;">
+          <thead>
+            <tr style="border-bottom:1px solid #cbd5e1;text-align:left;color:#64748b;">
+              <th style="padding:8px 0;">ITEM</th>
+              <th style="padding:8px 0;text-align:right;">AMOUNT (LKR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:12px 0;">Wedding Venue &amp; Package Reservation Settlement</td>
+              <td style="padding:12px 0;text-align:right;font-weight:600;" id="invSubtotal">409,090.91</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 0;color:#64748b;">VAT Tax (10%)</td>
+              <td style="padding:8px 0;text-align:right;color:#64748b;" id="invTax">40,909.09</td>
+            </tr>
+            <tr style="border-top:1px solid #e2e8f0;">
+              <td style="padding:12px 0;font-weight:700;">Total Paid In Full</td>
+              <td style="padding:12px 0;text-align:right;font-weight:700;color:#16a34a;" id="invTotal">LKR 450,000.00</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="font-size:0.75rem;color:#94a3b8;border-top:1px dashed #cbd5e1;padding-top:12px;text-align:center;">
+          Verified and stamped electronically by CeremonyConnect Accounts Dept.
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:20px;">
+        <button type="button" class="btn-verify" onclick="window.print()">🖨️ Print Invoice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page JavaScript -->
+  <script>
+    let currentSession = null;
+
+    function getAuthHeaders() {
+      if (!currentSession || !currentSession.rawPassword) return {};
+      const creds = btoa(`${currentSession.email}:${currentSession.rawPassword}`);
+      return { 'Authorization': `Basic ${creds}` };
+    }
+
+    function formatLKR(num) {
+      const n = Number(num) || 0;
+      return 'LKR ' + n.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    async function loadFinanceData() {
+      const sessionStr = localStorage.getItem('cc_session');
+      if (!sessionStr) {
+        window.location.href = 'login.html';
+        return;
+      }
+      currentSession = JSON.parse(sessionStr);
+
+      if (currentSession.fullName) {
+        document.getElementById('navOfficerName').textContent = currentSession.fullName;
+      }
+
+      await Promise.all([
+        loadQueue(),
+        loadTransactions(),
+        loadRefunds()
+      ]);
+    }
+
+    // ── Load Verification Queue ──
+    async function loadQueue() {
+      const tbody = document.getElementById('queueTableBody');
+      const badge = document.getElementById('queueBadge');
+
+      try {
+        const res = await fetch('/api/payments/verification-queue', {
+          headers: getAuthHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to load queue');
+        const items = await res.json();
+
+        badge.textContent = `${items.length} ACTION REQUIRED`;
+
+        if (!items || items.length === 0) {
+          tbody.innerHTML = `
+            <tr><td colspan="8" style="text-align:center;padding:36px;color:#94a3b8;">
+              No pending payment slips to verify. All caught up!
+            </td></tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = items.map(p => {
+          const custName = p.customer ? p.customer.fullName : 'Customer';
+          const bookRef  = p.reservation ? `CC-BK-2026-${String(p.reservation.id).padStart(3, '0')}` : 'CC-BK-2026-001';
+          const dateStr  = p.submittedAt ? p.submittedAt.slice(0, 10) : '2026-09-25';
+
+          return `
+            <tr>
+              <td><strong>${p.paymentRef}</strong></td>
+              <td>${custName}</td>
+              <td>${bookRef}</td>
+              <td style="font-weight:700;color:#f8fafc;">${formatLKR(p.amount)}</td>
+              <td>${p.bankName || 'Commercial Bank'} <small style="color:#64748b;">(${p.transactionReference || 'REF'})</small></td>
+              <td>${dateStr}</td>
+              <td>
+                <button class="btn-link-action" onclick="viewSlip(${p.id})">View Slip</button>
+              </td>
+              <td>
+                <div style="display:flex;gap:8px;">
+                  <button class="btn-verify" onclick="verifySlip(${p.id})">Verify</button>
+                  <button class="btn-reject" onclick="openRejectModal(${p.id})">Reject</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error('Queue load error:', err);
+      }
+    }
+
+    // ── Load All Transactions ──
+    async function loadTransactions() {
+      const tbody = document.getElementById('transactionsTableBody');
+
+      try {
+        const res = await fetch('/api/payments/transactions', {
+          headers: getAuthHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to load transactions');
+        const list = await res.json();
+
+        if (!list || list.length === 0) {
+          tbody.innerHTML = `
+            <tr><td colspan="8" style="text-align:center;padding:36px;color:#94a3b8;">
+              No transaction records found.
+            </td></tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = list.map(p => {
+          const custName = p.customer ? p.customer.fullName : 'Kasun Perera';
+          const bookRef  = p.reservation ? `CC-BK-2026-${String(p.reservation.id).padStart(3, '0')}` : 'CC-BK-2026-001';
+          const dateStr  = p.submittedAt ? p.submittedAt.slice(0, 10) : '2026-09-25';
+          const isVerified = p.status === 'VERIFIED';
+          const isRejected = p.status === 'REJECTED';
+          const isRefunded = p.status === 'REFUNDED';
+
+          let statusBadge = '';
+          if (isVerified) {
+            statusBadge = `<span class="status-pill status-verified">VERIFIED</span>`;
+          } else if (isRejected) {
+            statusBadge = `<span class="status-pill status-rejected">REJECTED</span>`;
+          } else if (isRefunded) {
+            statusBadge = `<span class="status-pill status-refunded">REFUNDED</span>`;
+          } else {
+            statusBadge = `<span class="status-pill status-pending">PENDING</span>`;
+          }
+
+          let invoiceBtn = '-';
+          if (isVerified) {
+            invoiceBtn = `<button class="btn-invoice" onclick="viewInvoice('${p.paymentRef}', '${custName}', '${bookRef}', ${p.amount}, '${dateStr}')">Invoice</button>`;
+          }
+
+          return `
+            <tr>
+              <td><strong>${p.paymentRef}</strong></td>
+              <td>${custName}</td>
+              <td>${bookRef}</td>
+              <td style="font-weight:700;color:#f8fafc;">${formatLKR(p.amount)}</td>
+              <td><span class="pill-type">${p.paymentType || 'ADVANCE'}</span></td>
+              <td>${dateStr}</td>
+              <td>${statusBadge}</td>
+              <td>${invoiceBtn}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error('Transactions load error:', err);
+      }
+    }
+
+    // ── Load Refunds Queue ──
+    async function loadRefunds() {
+      const tbody = document.getElementById('refundsTableBody');
+      const badge = document.getElementById('refundQueueBadge');
+
+      try {
+        const res = await fetch('/api/payments/refunds', {
+          headers: getAuthHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to load refunds');
+        const refunds = await res.json();
+
+        const pendingRefunds = refunds.filter(r => r.status === 'IN_PROCESSING');
+        badge.textContent = `${pendingRefunds.length} IN PROCESSING`;
+
+        if (!refunds || refunds.length === 0) {
+          tbody.innerHTML = `
+            <tr><td colspan="9" style="text-align:center;padding:36px;color:#94a3b8;">
+              No pending refunds currently in processing.
+            </td></tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = refunds.map(r => {
+          const custName = r.customer ? r.customer.fullName : 'Customer';
+          const payRef   = r.payment ? r.payment.paymentRef : '—';
+          const bookRef  = r.reservation ? `CC-BK-2026-${String(r.reservation.id).padStart(3, '0')}` : '—';
+          const dateStr  = r.requestedAt ? r.requestedAt.slice(0, 10) : '2026-09-25';
+          const isProcessing = r.status === 'IN_PROCESSING';
+
+          let actionCol = isProcessing ?
+            `<button class="btn-complete-refund" onclick="completeRefund(${r.id})">Complete Refund</button>` :
+            `<span style="color:#a855f7;font-weight:600;font-size:0.8rem;">✓ Disbursed</span>`;
+
+          return `
+            <tr>
+              <td><strong>${r.refundRef}</strong></td>
+              <td>${payRef}</td>
+              <td>${bookRef}</td>
+              <td>${custName}</td>
+              <td style="font-weight:700;color:#f87171;">${formatLKR(r.amount)}</td>
+              <td><small>${r.reason || 'Staff cancellation'}</small></td>
+              <td>${dateStr}</td>
+              <td>
+                <span class="status-pill ${isProcessing ? 'status-pending' : 'status-refunded'}">
+                  ${r.status}
+                </span>
+              </td>
+              <td>${actionCol}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error('Refunds load error:', err);
+      }
+    }
+
+    // ── Actions ──
+    async function verifySlip(paymentId) {
+      if (!confirm('Are you sure you want to approve and verify this payment slip?')) return;
+
+      try {
+        const res = await fetch(`/api/payments/${paymentId}/verify`, {
+          method: 'POST',
+          headers: {
+            ...getAuthHeaders(),
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ remarks: 'Verified by Finance Officer' })
+        });
+        if (!res.ok) throw new Error('Verification failed');
+        alert('✅ Payment verified successfully! Invoice generated.');
+        loadFinanceData();
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
+    }
+
+    function openRejectModal(paymentId) {
+      document.getElementById('rejectPaymentId').value = paymentId;
+      document.getElementById('rejectReasonText').value = '';
+      document.getElementById('rejectReasonModal').classList.remove('hidden');
+    }
+
+    async function handleConfirmReject(e) {
+      e.preventDefault();
+      const paymentId = document.getElementById('rejectPaymentId').value;
+      const reason = document.getElementById('rejectReasonText').value.trim();
+
+      try {
+        const res = await fetch(`/api/payments/${paymentId}/reject`, {
+          method: 'POST',
+          headers: {
+            ...getAuthHeaders(),
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ reason })
+        });
+        if (!res.ok) throw new Error('Rejection request failed');
+        alert('❌ Payment rejected. Customer can re-upload a corrected slip.');
+        closeModal('rejectReasonModal');
+        loadFinanceData();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    async function completeRefund(refundId) {
+      if (!confirm('Confirm that bank transfer refund has been completed to the customer?')) return;
+
+      try {
+        const res = await fetch(`/api/payments/refunds/${refundId}/complete`, {
+          method: 'POST',
+          headers: getAuthHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to complete refund');
+        alert('✅ Refund status updated to REFUNDED.');
+        loadFinanceData();
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
+    }
+
+    function viewSlip(paymentId) {
+      const slipUrl = `/api/payments/file/${paymentId}`;
+      document.getElementById('slipImgPreview').src = slipUrl;
+      document.getElementById('slipDownloadLink').href = slipUrl;
+      document.getElementById('viewSlipModal').classList.remove('hidden');
+    }
+
+    function viewInvoice(payRef, customerName, bookingRef, amount, date) {
+      document.getElementById('invNumber').textContent = `INV-${payRef}`;
+      document.getElementById('invDate').textContent = date;
+      document.getElementById('invCustomer').textContent = customerName;
+      document.getElementById('invBookingRef').textContent = bookingRef;
+      document.getElementById('invPaymentRef').textContent = payRef;
+
+      const subtotal = amount / 1.10;
+      const tax = amount - subtotal;
+      document.getElementById('invSubtotal').textContent = subtotal.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('invTax').textContent = tax.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('invTotal').textContent = formatLKR(amount);
+      document.getElementById('invoiceModal').classList.remove('hidden');
+    }
+
+    function financeSignOut() {
+      localStorage.removeItem('cc_session');
+      window.location.href = 'index.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', loadFinanceData);
+  </script>
+</body>
+</html>
