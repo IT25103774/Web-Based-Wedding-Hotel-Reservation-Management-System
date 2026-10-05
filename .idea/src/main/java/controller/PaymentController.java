@@ -1,4 +1,4 @@
-package com.ceremonyconnect.bookingservice.controller;
+package controller;
 
 import com.ceremonyconnect.bookingservice.model.Payment;
 import com.ceremonyconnect.bookingservice.model.Refund;
@@ -53,13 +53,13 @@ public class PaymentController {
         } catch (Exception ignored) {}
 
         Payment payment = paymentService.uploadPayment(
-                reservationId, amount, type, bankName, transactionRef, file, userDetails.getUsername());
+            reservationId, amount, type, bankName, transactionRef, file, userDetails.getUsername());
 
         return ResponseEntity.ok(Map.of(
-                "message", "Payment slip uploaded successfully",
-                "paymentId", payment.getId(),
-                "paymentRef", payment.getPaymentRef(),
-                "status", payment.getStatus()
+            "message", "Payment slip uploaded successfully",
+            "paymentId", payment.getId(),
+            "paymentRef", payment.getPaymentRef(),
+            "status", payment.getStatus()
         ));
     }
 
@@ -87,7 +87,7 @@ public class PaymentController {
     @GetMapping({"/my-summary", "/customer-summary"})
     public ResponseEntity<?> getCustomerSummary(@AuthenticationPrincipal UserDetails userDetails) {
         User customer = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+            .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         return ResponseEntity.ok(paymentService.getCustomerPaymentSummary(customer.getId()));
     }
@@ -112,15 +112,15 @@ public class PaymentController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         User officer = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("Officer not found"));
+            .orElseThrow(() -> new RuntimeException("Officer not found"));
 
         String remarks = (body != null) ? body.getOrDefault("remarks", "Payment slip verified successfully") : "Verified";
         Payment verified = paymentService.verifyPayment(id, remarks, officer.getId());
 
         return ResponseEntity.ok(Map.of(
-                "message", "Payment verified successfully",
-                "paymentRef", verified.getPaymentRef(),
-                "status", verified.getStatus()
+            "message", "Payment verified successfully",
+            "paymentRef", verified.getPaymentRef(),
+            "status", verified.getStatus()
         ));
     }
 
@@ -135,16 +135,16 @@ public class PaymentController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         User officer = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("Officer not found"));
+            .orElseThrow(() -> new RuntimeException("Officer not found"));
 
         String reason = body.getOrDefault("reason", "Payment slip details mismatched or unreadable.");
         Payment rejected = paymentService.rejectPayment(id, reason, officer.getId());
 
         return ResponseEntity.ok(Map.of(
-                "message", "Payment slip rejected",
-                "paymentRef", rejected.getPaymentRef(),
-                "status", rejected.getStatus(),
-                "reason", rejected.getRejectionReason()
+            "message", "Payment slip rejected",
+            "paymentRef", rejected.getPaymentRef(),
+            "status", rejected.getStatus(),
+            "reason", rejected.getRejectionReason()
         ));
     }
 
@@ -176,14 +176,14 @@ public class PaymentController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         User officer = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("Officer not found"));
+            .orElseThrow(() -> new RuntimeException("Officer not found"));
 
         Refund completed = paymentService.completeRefund(id, officer.getId());
 
         return ResponseEntity.ok(Map.of(
-                "message", "Refund marked as completed",
-                "refundRef", completed.getRefundRef(),
-                "status", completed.getStatus()
+            "message", "Refund marked as completed",
+            "refundRef", completed.getRefundRef(),
+            "status", completed.getStatus()
         ));
     }
 
@@ -203,8 +203,8 @@ public class PaymentController {
         if (contentType == null) contentType = "image/jpeg";
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
-                .body(resource);
+            .contentType(MediaType.parseMediaType(contentType))
+            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
+            .body(resource);
     }
 }
