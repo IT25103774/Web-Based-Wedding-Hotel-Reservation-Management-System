@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76465e1b-6ca0-44d4-95b0-466f872b8657" name="Changes" comment="" />
+    <list default="true" id="76465e1b-6ca0-44d4-95b0-466f872b8657" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com.ceremonyconnect.bookingservice/exception/GlobalExceptionHandler.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +42,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.ceremonyconnect.bookingservice.exception" />
       <recent name="com.ceremonyconnect.bookingservice.config" />
     </key>
   </component>
