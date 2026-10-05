@@ -31,7 +31,11 @@ public class ReservationController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         Long customerId = userRepository.findByEmail(userDetails.getUsername())
+<<<<<<< Updated upstream
                 .orElseThrow().getId();
+=======
+            .orElseThrow().getId();
+>>>>>>> Stashed changes
         Reservation saved = reservationService.createReservation(req, customerId);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
@@ -41,7 +45,11 @@ public class ReservationController {
     public List<Reservation> myReservations(
             @AuthenticationPrincipal UserDetails userDetails) {
         Long customerId = userRepository.findByEmail(userDetails.getUsername())
+<<<<<<< Updated upstream
                 .orElseThrow().getId();
+=======
+            .orElseThrow().getId();
+>>>>>>> Stashed changes
         return reservationService.getByCustomer(customerId);
     }
 
@@ -67,7 +75,11 @@ public class ReservationController {
         boolean catering = Boolean.parseBoolean(body.getOrDefault("cateringRequested", false).toString());
         boolean decoration = Boolean.parseBoolean(body.getOrDefault("decorationRequested", false).toString());
         Reservation updated = reservationService.updateCustomization(
+<<<<<<< Updated upstream
                 id, catering, decoration, userDetails.getUsername());
+=======
+            id, catering, decoration, userDetails.getUsername());
+>>>>>>> Stashed changes
         return ResponseEntity.ok(updated);
     }
 
@@ -81,7 +93,11 @@ public class ReservationController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         Long customerId = userRepository.findByEmail(userDetails.getUsername())
+<<<<<<< Updated upstream
                 .orElseThrow().getId();
+=======
+            .orElseThrow().getId();
+>>>>>>> Stashed changes
         Reservation cancelled = reservationService.cancelByCustomer(id, customerId, userDetails.getUsername());
         return ResponseEntity.ok(cancelled);
     }
