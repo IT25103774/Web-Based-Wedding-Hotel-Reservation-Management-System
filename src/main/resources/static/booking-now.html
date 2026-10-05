@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserve Your Date | CeremonyConnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .booking-portal-wrap {
+      max-width: 1240px;
+      margin: -60px auto 100px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ╔═══════════════════════════════════════════════════════════════╗ -->
+  <!-- ║         1. GLOBAL FIXED TRANSPARENT NAVBAR                    ║ -->
+  <!-- ╚═══════════════════════════════════════════════════════════════╝ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-brand">✦ CEREMONYCONNECT</span>
+        <span class="nav-logo-sub">Luxury Hotel Venues & Celebrations</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="halls.html" class="nav-link">Halls</a></li>
+        <li><a href="booking-now.html" class="nav-link active">Booking Now</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="service.html" class="nav-link">Service</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="login.html" class="nav-btn-inquire nav-btn-gold" id="btnNavSignIn">Login</a>
+
+        <!-- Luxury User Profile Hover-Triggered Dropdown Menu -->
+        <div class="user-profile-menu" id="custNavDropdownWrap" style="display:none;">
+          <div class="user-profile-trigger" id="custNavTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="cust-avatar" id="custNavAvatar">C</span>
+            <span class="cust-name-text" id="custNavName">Customer</span>
+            <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <div class="user-dropdown-menu" id="custDropdownMenu" role="menu">
+            <div class="dropdown-header">
+              <span class="dropdown-user-greeting">Signed in as</span>
+              <span class="dropdown-user-email" id="custDropdownEmail">customer@gmail.com</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <ul class="dropdown-list">
+              <li>
+                <a href="customer-dashboard.html" class="dropdown-item" role="menuitem">
+                  <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                    <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                    <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                    <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                  </svg>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+              <li>
+                <a href="customer-dashboard.html#reservations" class="dropdown-item" role="menuitem">
+                  <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  <span>My Reservations</span>
+                </a>
+              </li>
+              <div class="dropdown-divider"></div>
+              <li>
+                <button type="button" class="dropdown-item dropdown-signout" onclick="custSignOut()" role="menuitem">
+                  <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  <span>Sign Out</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ╔═══════════════════════════════════════════════════════════════╗ -->
+  <!-- ║         2. HERO SECTION (GLOBAL BACKGROUND IMAGE)             ║ -->
+  <!-- ╚═══════════════════════════════════════════════════════════════╝ -->
+  <header class="hero-section hero-section-compact" style="background-image: url('images/backgrounds/hero-booking.jpg');">
+    <div class="hero-overlay"></div>
+    <div class="hero-container" style="text-align:center;">
+      <div class="hero-eyebrow" style="justify-content:center;">
+        Bespoke Wedding Reservations
+      </div>
+      <h1 class="hero-title" style="margin-bottom:12px;">
+        Reserve Your <em>Date.</em>
+      </h1>
+      <div class="hero-divider" style="justify-content:center;">
+        <span class="hero-divider-line"></span>
+        <span class="hero-divider-icon">✦</span>
+        <span class="hero-divider-line"></span>
+      </div>
+      <p class="hero-subtitle" style="margin:0 auto;">
+        Curate your celebration with real-time venue quotes, tailored dining per guest, and instant date reservation.
+      </p>
+    </div>
+  </header>
+
+  <!-- ╔═══════════════════════════════════════════════════════════════╗ -->
+  <!-- ║         3. RESERVATION FORM & COST ESTIMATOR PORTAL           ║ -->
+  <!-- ╚═══════════════════════════════════════════════════════════════╝ -->
+  <main class="booking-portal-wrap">
+    <div class="glass-booking-card" style="box-shadow: 0 25px 60px rgba(0,0,0,0.5);">
+
+      <!-- Left Column: Live Cost Estimation -->
+      <div class="glass-left-pane">
+        <div>
+          <div class="glass-pane-header">
+            <h3>Investment Summary</h3>
+            <p>Live calculated breakdown for your chosen venue, catering, and décor packages in Sri Lankan Rupees.</p>
+          </div>
+
+          <div class="live-cost-box">
+            <div class="live-cost-row">
+              <span>Hall Daily Rate:</span>
+              <strong id="estHall" style="color:var(--text-white);">—</strong>
+            </div>
+            <div class="live-cost-row">
+              <span>Package Base:</span>
+              <strong id="estPkg" style="color:var(--text-white);">—</strong>
+            </div>
+            <div class="live-cost-row" id="estCatRow" style="display:none;">
+              <span>Catering Banquet:</span>
+              <strong id="estCat" style="color:var(--text-white);">—</strong>
+            </div>
+            <div class="live-cost-row" id="estDecoRow" style="display:none;">
+              <span>Floral & Ambiance Décor:</span>
+              <strong id="estDeco" style="color:var(--text-white);">—</strong>
+            </div>
+            <div class="live-cost-divider"></div>
+            <div class="live-cost-total">
+              <span class="live-cost-total-label">Estimated Total:</span>
+              <span class="live-cost-total-val" id="estTotal">LKR 0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <ul class="guarantees-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Instant Conflict Lock:</strong> Real-time reservation lock so no other couple can book your date.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Bank of Ceylon Verified:</strong> Secure direct bank transfer with rapid finance verification.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Personal Coordinator:</strong> Dedicated wedding specialist assigned within 48 hours.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right Column: Interactive Reservation Inputs -->
+      <div class="glass-right-pane">
+        <form id="bookingForm" novalidate>
+
+          <div class="form-group-row">
+            <div class="form-field">
+              <label class="form-label" for="hallSelect">Selected Hall <span class="req">*</span></label>
+              <select id="hallSelect" class="form-select" required>
+                <option value="" disabled selected>-- Select a Venue / Hall --</option>
+                <option value="Grand Ballroom">Grand Ballroom (1,000 pax · LKR 5,000/day)</option>
+                <option value="Garden Terrace">Garden Terrace (350 pax · LKR 2,500/day)</option>
+                <option value="Azure Hall">Azure Hall (200 pax · LKR 1,800/day)</option>
+                <option value="Royal Suite">Royal Suite (80 pax · LKR 3,200/day)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="packageSelect">Wedding Package <span class="req">*</span></label>
+              <select id="packageSelect" class="form-select" required>
+                <option value="" disabled selected>-- Select a Wedding Package --</option>
+                <option value="Silver Dream">Silver Dream (Base LKR 3,000 · LKR 35/head)</option>
+                <option value="Golden Bliss">Golden Bliss (Base LKR 6,500 · LKR 65/head)</option>
+                <option value="Platinum Royale">Platinum Royale (Base LKR 12,000 · LKR 120/head)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-field">
+              <label class="form-label" for="reservationDate">Reservation Date <span class="req">*</span></label>
+              <input type="date" id="reservationDate" class="form-input" required />
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="guestCount">Expected Guest Count <span class="req">*</span></label>
+              <input type="number" id="guestCount" class="form-input" placeholder="e.g. 250" min="10" max="1000" required />
+            </div>
+          </div>
+
+          <!-- Add-ons with High-Contrast Dark Theme (Unchecked by default) -->
+          <label class="addon-item-box" id="labelCatering">
+            <div class="addon-checkbox-wrap">
+              <input type="checkbox" id="cateringCheck" />
+              <div class="custom-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+            <div class="addon-info">
+              <div class="addon-title-text">Luxury Buffet & Dining Service</div>
+              <div class="addon-desc-text" id="cateringPerHeadDesc">Chef-curated banquet menu per guest</div>
+            </div>
+            <span class="addon-cost-pill" id="addonCateringBadge">Optional Add-on</span>
+          </label>
+
+          <label class="addon-item-box" id="labelDeco">
+            <div class="addon-checkbox-wrap">
+              <input type="checkbox" id="decoCheck" />
+              <div class="custom-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+            <div class="addon-info">
+              <div class="addon-title-text">Floral Arch & Stage Lighting Decoration</div>
+              <div class="addon-desc-text">Botanical floral arches, candlelit centerpieces, and ambiance lighting</div>
+            </div>
+            <span class="addon-cost-pill" id="addonDecoBadge">Optional Add-on</span>
+          </label>
+
+          <!-- Contact Details (for guest pre-fill) -->
+          <div class="form-group-row">
+            <div class="form-field">
+              <label class="form-label" for="custFullName">Full Name</label>
+              <input type="text" id="custFullName" class="form-input" placeholder="e.g. Kasun Perera" />
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="custPhone">Phone Number</label>
+              <input type="tel" id="custPhone" class="form-input" placeholder="0771234567 or +94771234567" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="custEmail">Email Address</label>
+            <input type="email" id="custEmail" class="form-input" placeholder="yourname@gmail.com" />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="specialRequests">Custom Requests & Dietary Notes</label>
+            <textarea id="specialRequests" class="form-textarea" rows="2" placeholder="Tell us about specific theme colors, cultural customs, or dietary restrictions…"></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btnSubmitBooking" class="btn-submit-booking">
+            <span>Confirm & Submit Reservation</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ╔═══════════════════════════════════════════════════════════════╗ -->
+  <!-- ║         4. DIRECT POST-BOOKING PAYMENT MODAL                  ║ -->
+  <!-- ╚═══════════════════════════════════════════════════════════════╝ -->
+  <div id="postBookingPaymentModal" class="modal-backdrop hidden">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" onclick="closePostBookingModal()">&times;</button>
+      <div style="text-align:center;margin-bottom:24px;">
+        <span style="font-size:3rem;">🎉</span>
+        <h3 style="font-family:var(--font-serif);font-size:2rem;color:var(--champagne);margin:8px 0 4px;">
+          Reservation Submitted!
+        </h3>
+        <p style="font-size:0.85rem;color:var(--text-muted-dark);">
+          Booking ID: <strong id="postModalResId" style="color:var(--text-white);">#1</strong> · Status: <span style="background:rgba(201,168,76,0.25);color:var(--gold);padding:3px 10px;border-radius:12px;font-weight:600;">PENDING</span>
+        </p>
+      </div>
+
+      <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.3);border-radius:var(--radius-sm);padding:18px;margin-bottom:22px;font-size:0.85rem;">
+        <div style="font-weight:700;color:var(--champagne);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;font-size:0.75rem;">
+          🏛️ Bank Transfer Details (Sri Lanka)
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;color:#cbd5e1;">
+          <span>Bank:</span><strong>Bank of Ceylon (BOC)</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;color:#cbd5e1;">
+          <span>Account Name:</span><strong>CeremonyConnect Events (Pvt) Ltd</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;color:#cbd5e1;">
+          <span>Account Number:</span><strong style="color:var(--gold);font-size:1rem;letter-spacing:1px;">0089 2341 2001</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;color:#cbd5e1;">
+          <span>Branch:</span><strong>Colombo 03 Corporate Branch</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;color:#cbd5e1;">
+          <span>Amount:</span><strong id="postModalAmount" style="color:#4ade80;font-size:1.1rem;">LKR 0.00</strong>
+        </div>
+      </div>
+
+      <form id="postBookingSlipForm" onsubmit="submitPostBookingSlip(event)">
+        <div class="form-field">
+          <label class="form-label" for="postModalSlipFile">
+            Upload Bank Payment Slip / Receipt <span class="req">*</span>
+          </label>
+          <input type="file" id="postModalSlipFile" accept="image/*,.pdf" class="form-input" required style="padding:10px;" />
+          <div style="font-size:0.75rem;color:var(--text-muted-dark);margin-top:4px;">Supported: JPG, PNG, PDF (Max 5MB)</div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:20px;">
+          <button type="submit" id="btnUploadSlipPost" class="btn-submit-booking" style="margin-top:0;flex:1.2;">
+            <span>📤 Upload Slip Now</span>
+          </button>
+          <a href="customer-dashboard.html" class="btn-luxury-outline" style="flex:1;text-align:center;justify-content:center;">
+            View in Dashboard
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="luxury-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h4>CeremonyConnect</h4>
+        <p>Sri Lanka's premier luxury wedding venue atelier.</p>
+        <p style="margin-top:14px;color:var(--champagne);">📍 77 Galle Road, Colombo 03 · 📞 +94 11 2 437 437</p>
+      </div>
+      <div class="footer-col">
+        <h5>Exclusive Venues</h5>
+        <ul>
+          <li><a href="booking-now.html?hall=Grand+Ballroom">Grand Ballroom</a></li>
+          <li><a href="booking-now.html?hall=Garden+Terrace">Garden Terrace</a></li>
+          <li><a href="booking-now.html?hall=Azure+Hall">Azure Hall</a></li>
+          <li><a href="booking-now.html?hall=Royal+Suite">Royal Suite</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="halls.html">Halls Gallery</a></li>
+          <li><a href="booking-now.html">Reserve Your Date</a></li>
+          <li><a href="service.html">Wedding Packages</a></li>
+          <li><a href="about.html">About Our Atelier</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Client Access</h5>
+        <ul>
+          <li><a href="login.html">Sign In / Register</a></li>
+          <li><a href="customer-dashboard.html">Customer Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 CeremonyConnect Luxury Events. All rights reserved.</div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
